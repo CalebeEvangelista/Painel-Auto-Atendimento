@@ -1,17 +1,73 @@
 import time 
 from os import system
 
+def limparArquivo():
+    with open("pedido.txt","w+") as arq:
+        arq.writelines('')
+
 def imprimir_pedido():
+    from os import system
+    import time
+
+    system('cls')
+    print("Pedido feito com sucesso")
+    time.sleep(1)
+    system('cls')
+    print("Imprimindo seu pedido .")
+    time.sleep(1)
+    system('cls')
+    print("Imprimindo seu pedido ..")
+    time.sleep(1)
+    system('cls')
+    print("Imprimindo seu pedido ...")
+    time.sleep(1)
+
     itens = []
+    itens2 = []
+    h = 1
     i = 0
+    j = 2
+    total = 0
+
     with open('pedido.txt' , 'r+') as arq:
         for linha in arq:
-            linha = linha.strip(",")
-            itens.append(linha.split())       
-        
-        for iten in itens:
+            linha = linha.strip()
+            itens.append(linha.split('-')) 
+
+        for item in itens[0]:
+            item = item.strip()
+            itens2.append(item.split(','))
+
+        try:
+            system('cls')
             print("**********************************")
-            print('''* {} {}''' .format(itens[i][0]))
+            print("*        Calebe's Burger !       *")
+            print("**********************************")
+            print("*         Cupom fiscal!          *")
+            print("**********************************")
+            for item in itens2:
+                if itens2[i][h] and itens2[i][j] == '0':
+                    del(itens2[i])
+                    i -= 1
+                else:
+                    valor = float(itens2[i][h])
+                    quantidade = float(itens2[i][j])
+                    soma = valor * quantidade
+                    mostrar = int(quantidade)
+                    print('''* {}x {} - Total de R$ {}''' .format(mostrar, itens2[i][0], soma))
+                    print('**********************************')
+                    time.sleep(0.5)
+                    total += soma
+                i += 1
+
+        finally:
+            print("* O valor total do pedido é R${} *" .format(total))
+            print('**********************************')
+            opcao = input("Digite qualquer tecla para finalizar seu pagamento!")
+            system('cls')
+            print("Pagamento realizado com sucesso!")
+            time.sleep(1)
+            return
 
 def get_opcao():
     while True:
@@ -28,10 +84,14 @@ def get_quantidade():
             return quantidade
         except:
             print("Por favor insira uma quantidade valida!")
-            time.sleep(1.3)
+            time.sleep(1)
 
-def escolhas(temH):
-    if temH == True:
+def escolhas(temH,temB,temA,temS,temBQ):
+    if temH == False:
+        eH = input("Deseja escolher adicionar algum hambúrguer ? (S/N) ") .upper()
+        if eH == 'S':
+            print('')
+    elif temB == False:
         eB = input("Deseja escolher adicionar alguma bebida ? (S/N) ") .upper()
         if eB == 'S':
             bebida,valorB,quanB = bebidas()
@@ -40,7 +100,7 @@ def escolhas(temH):
             print("Sem bebidas hoje! Anotado.")
             bebida,valorB,quanB = 0,0,0
             time.sleep(0.6)
-
+    elif temA == False:
         eA = input("Deseja escolher adicionar algum acompanhamento ? (S/N) ") .upper()
         if eA == 'S':
             acc,valorA,quanA = acompanhamentos()
@@ -49,7 +109,7 @@ def escolhas(temH):
             print("Sem acompanhamentos hoje! Anotado.")
             acc,valorA,quanA = 0,0,0
             time.sleep(0.6)
-
+    elif temS == False:
         eS = input("Deseja escolher adicionar alguma sobremesa ? (S/N) ") .upper()
         if eS == 'S':
             sobrem,valorS,quanS = sobremesas()
@@ -58,7 +118,7 @@ def escolhas(temH):
             print("Sem sobremesas hoje! Anotado.")
             sobrem,valorS,quanS = 0,0,0
             time.sleep(0.6)
-
+    elif temBQ == False:
         eBQ = input("Deseja escolher adicionar alguma bebida quente ? (S/N) ") .upper()
         if eBQ == 'S':
             bebidaQuente,valorBQ,quanBQ = bebidasQuentes()
@@ -76,33 +136,17 @@ def escolhas(temH):
         #if eObs == 'S':
         obb = 'Nao'
 
-        return bebida,valorB,quanB,acc,valorA,quanA,sobrem,valorS,quanS,bebidaQuente,valorBQ,quanBQ,alt,obb
+    return bebida,valorB,quanB,acc,valorA,quanA,sobrem,valorS,quanS,bebidaQuente,valorBQ,quanBQ,alt,obb 
 
-    else:
-        eH = input("Deseja escolher adicionar algum hambúrguer ? (S/N) ") .upper()
-        if eH == 'S':
-            ham = 2
-        else:
-            #return ham,valorH,quanH,promocao,valorP,quanP,bebida,valorB,quanB,acc,valorA,quanA,sobrem,valorS,quanS,bebidaQuente,valorBQ,quanBQ,alt,obb 
-            print("")  
-
-def adicionarArquivo(valorT,ham,valorH,quanH,promocao,valorP,quanP,bebida,valorB,quanB,acc,valorA,quanA,sobrem,valorS,quanS,bebidaQuente,valorBQ,quanBQ,alt,obb):
-    with open('pedido.txt' , 'w+') as arq:
-            arq.writelines(f'{valorT}-{ham},{valorH},{quanH}-{promocao},{valorP},{quanP}-{bebida},{valorB},{quanB}-{acc},{valorA},{quanA}-{sobrem},{valorS},{quanS}-{bebidaQuente},{valorBQ},{quanBQ}-{alt}-{obb}\n')
+def adicionarArquivo(nome,valor,quant):
+    with open('pedido.txt' , 'a+') as arq:
+            arq.writelines(f'{nome},{valor},{quant}-')
             arq.seek(0)
-            print("Pedido feito com sucesso")
-            system('cls')
-            time.sleep(0.4)
-            print("Imprimindo seu pedido .")
-            system('cls')
-            time.sleep(0.4)
-            print("Imprimindo seu pedido ..")
-            system('cls')
-            time.sleep(0.4)
-            print("Imprimindo seu pedido ...")
-            time.sleep(1)
-            imprimir_pedido()
-
+            escolha = input("Deseja adicionar mais produtos ao seu pedido ? (S/N) ") .upper()
+            if escolha == 'S':
+                tela1()
+            else:
+                imprimir_pedido()
 
 def hamburger():
     system('cls')
@@ -121,13 +165,30 @@ def hamburger():
     opcao = get_opcao()
     if opcao != 0:
         if opcao == 1:
-            ham = 'CalebeBurger'
-            valorH = 15.00
-            quanH = get_quantidade()
-            quanP,promocao,valorP = promocoes()
-            temH = True
-            bebida,valorB,quanB,acc,valorA,quanA,sobrem,valorS,quanS,bebidaQuente,valorBQ,quanBQ,alt,obb = escolhas(temH)
-            pedido(ham,valorH,quanH,promocao,valorP,quanP,bebida,valorB,quanB,acc,valorA,quanA,sobrem,valorS,quanS,bebidaQuente,valorBQ,quanBQ,alt,obb)
+            nome = 'CalebeBurger'
+            valor = 15.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 2:
+            nome = 'X-Tudo'
+            valor = 9.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 3:
+            nome = 'X-Frango'
+            valor = 7.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 4:
+            nome = 'Ricardão'
+            valor = 4.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 5:
+            nome = 'BaconBurger'
+            valor = 10.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
     else:
         cancelarPedido()
     time.sleep(1)
@@ -151,10 +212,40 @@ def bebidas():
     opcao = get_opcao()
     if opcao != 0:
         if opcao == 1:
-            bebida = 'LataRefri'
-            valorB = 4.00
-            quanB = get_quantidade()
-            return bebida, valorB, quanB
+            nome = 'LataRefri'
+            valor = 4.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 2:
+            nome = 'Refri1Litro'
+            valor = 6.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 3:
+            nome = 'Refri2Litros'
+            valor = 8.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 4:
+            nome = 'Cerveja'
+            valor = 7.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 5:
+            nome = 'Energético'
+            valor = 10.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 6:
+            nome = 'Agua'
+            valor = 1.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 7:
+            nome = 'JarraDeSuco'
+            valor = 6.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
     else:
         cancelarPedido()
     time.sleep(1)
@@ -179,10 +270,45 @@ def acompanhamentos():
     opcao = get_opcao()
     if opcao != 0:
         if opcao == 1:
-            acc = 'AneisDecebola'
-            valorA = 11.00
-            quanA = get_quantidade()
-            return acc, valorA, quanA
+            nome = 'AnéisDeCebola'
+            valor = 11.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 2:
+            nome = 'CamarãoFrito'
+            valor = 19.90
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 3:
+            nome = 'BatataFritaP'
+            valor = 2.50
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 4:
+            nome = 'BatataFritaM'
+            valor = 5.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 5:
+            nome = 'BatataFritaG'
+            valor = 10.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 6:
+            nome = 'Espetinho'
+            valor = 5.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 7:
+            nome = 'Espetinho carne'
+            valor = 5.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 8:
+            nome = 'Frango Frito'
+            valor = 5.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
     else:
         cancelarPedido()
     time.sleep(1)
@@ -199,17 +325,47 @@ def sobremesas():
     print("* 3 - Musse           | R$ 2,50  *")
     print("* 4 - Goiabada        | R$ 3,00  *")
     print("* 5 - DinDin Gourmet  | R$ 5,00  *")
-    print("* 4 - Chocolate       | R$ 2,00  *")
-    print("* 4 - PeitinDeGato    | R$ 7,00  *")
+    print("* 6 - Chocolate       | R$ 2,00  *")
+    print("* 7 - Peitin De Gato  | R$ 7,00  *")
     print("* 0 - Cancelar pedido            *")
     print("**********************************")
     opcao = get_opcao()
     if opcao != 0:
         if opcao == 1:
-            sobrem = 'Sorvete'
-            valorS = 3.75
-            quanS = get_quantidade()
-            return sobrem, valorS, quanS
+            nome = 'Sorvete'
+            valor = 3.75
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 2:
+            nome = 'Pudim'
+            valor = 2.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 3:
+            nome = 'Musse'
+            valor = 2.50
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 4:
+            nome = 'Goiabada'
+            valor = 3.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 5:
+            nome = 'DinDin Gourmet'
+            valor = 5.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 6:
+            nome = 'Chocolate'
+            valor = 2.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 7:
+            nome = 'PeitinDeGato'
+            valor = 7.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
     else:
         cancelarPedido()
     time.sleep(1)
@@ -229,27 +385,29 @@ def bebidasQuentes():
     opcao = get_opcao()
     if opcao != 0:
         if opcao == 1:
-            bebidaQuente = 'Cafe'
-            valorBQ = 3.00
-            quanBQ = get_quantidade()
-            return bebidaQuente, valorBQ, quanBQ
+            nome = 'Café'
+            valor = 3.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 2:
+            nome = 'Chá'
+            valor = 4.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 3:
+            nome = 'CocaDeOntem'
+            valor = 1.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
     time.sleep(1)
-
-def tela1():
-    system('cls')
-    print("**********************************")
-    print("* Bem vindo ao Calebe's Burger ! *")
-    print("**********************************")
-    time.sleep(1)
-    produtos()
 
 def promocoes():
     system('cls')
-    print("**********************************")
-    print("*        Calebe's Burger !       *")
-    print("**********************************")
-    print("*           Promoções            *")
-    print("**********************************")
+    print("*************************************************")
+    print("*                 Calebe's Burger !             *")
+    print("*************************************************")
+    print("*                    Promoções                  *")
+    print("*************************************************")
     print("""* 1 - Batata M + Refri Lata    | Por + R$ 8,00  *
 * 2 - Batata G + Refri 1 Litro | Por + R$ 14,00 *
 * 3 - Kit Fome (Batata G + Refri 2 Litros +
@@ -257,44 +415,38 @@ def promocoes():
 * 4 - Kit Petisco (Anéis de cebola + Camarão    *
 * frito + Frango frito + Cerveja + Energético   *
 * + Refrigerante 2 Litros)     | Por + R$ 49,00 *
-* 5 - BaconBurger              | Por + R$ 10,00 *
-* 6 - Nenhuma promoção         | Free           *
 * 0 - Cancelar pedido          | De graça :)    *""")
     print("**********************************")
     opcao = get_opcao()
     if opcao != 0:
         if opcao == 1:
-            promocao = 'BatataM+RefriLata'
-            valorP = 8.00
-            quanP = get_quantidade()
-            return quanP,promocao, valorP
+            nome = 'BatataM+RefriLata'
+            valor = 8.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 2:
+            nome = 'BatataG+Refri1Litro'
+            valor = 14.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 3:
+            nome = 'KitFome'
+            valor = 19.50
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
+        if opcao == 4:
+            nome = 'Kit Petisco'
+            valor = 49.00
+            quant = get_quantidade()
+            pedido(nome,valor,quant)
     else:
         cancelarPedido()
 
-def pedido(ham,valorH,quanH,promocao,valorP,quanP,bebida,valorB,quanB,acc,valorA,quanA,sobrem,valorS,quanS,bebidaQuente,valorBQ,quanBQ,alt,obb):
-    ham = ham
-    valorH = valorH
-    quanH = quanH
-    promocao = promocao
-    valorP = valorP
-    quanP = quanP
-    bebida = bebida
-    valorB = valorB
-    quanB = quanB
-    acc = acc
-    valorA = valorA
-    quanA = quanA
-    sobrem = sobrem
-    valorS = valorS
-    quanS = quanS
-    bebidaQuente = bebidaQuente
-    valorBQ = valorBQ
-    quanBQ = quanBQ
-    alt = alt
-    obb = obb
-    valorT = valorH * quanH + valorP * quanP + valorB * quanB + valorA * quanA + valorS * quanS + valorBQ * quanBQ
-    
-    adicionarArquivo(valorT,ham,valorH,quanH,promocao,valorP,quanP,bebida,valorB,quanB,acc,valorA,quanA,sobrem,valorS,quanS,bebidaQuente,valorBQ,quanBQ,alt,obb)
+def pedido(nome,valor,quant):
+    nome = nome
+    valor = valor
+    quant = quant
+    adicionarArquivo(nome,valor,quant)
 
 def cancelarPedido():
     print("Pedido Cancelado!")
@@ -311,6 +463,7 @@ def produtos():
     print("* 3 - Acompanhamentos            *")
     print("* 4 - Sobremesas                 *")
     print("* 5 - Bebidas quentes            *")
+    print("* 6 - Promoções                  *")
     print("* 9 - Finalizar pedido           *")
     print("* 0 - Cancelar pedido            *")
     print("**********************************")
@@ -336,6 +489,23 @@ def produtos():
         if opcao == 5:
             bebidasQuentes()
             time.sleep(1)
+        
+        if opcao == 6:
+            promocoes()
+            time.sleep(1)
+
+        if opcao == 9:
+            imprimir_pedido()
+            time.sleep(1)
+    
     else:
         cancelarPedido()
         time.sleep(1)
+
+def tela1():
+    system('cls')
+    print("**********************************")
+    print("* Bem vindo ao Calebe's Burger ! *")
+    print("**********************************")
+    time.sleep(1)
+    produtos()
