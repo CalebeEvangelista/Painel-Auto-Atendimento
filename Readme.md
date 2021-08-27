@@ -1,4 +1,6 @@
+
 # Painel de Auto-Atendimento
+<img src="https://i.imgur.com/qngJv3q.png" align="right" width="300">
 
 - O intuito desse projeto era fazer em Python um programa que simulasse um painel de auto atendimento, no maior estilo Mac Donald's.
 O código foi feito 100% em live na [Twitch](https://www.twitch.tv/calebeevangelista) e em breve vou postar um resumo das lives no [Youtube](https://www.youtube.com/channel/UCkXx8-TUjR_OUIzcOqdVDuw).
@@ -21,5 +23,3 @@ O código foi feito 100% em live na [Twitch](https://www.twitch.tv/calebeevangel
 [GitHub](https://github.com/CalebeEvangelista)
 [Twitch](https://www.twitch.tv/calebeevangelista)
 [Youtube](https://www.youtube.com/channel/UCkXx8-TUjR_OUIzcOqdVDuw)
-
-<img align="center" src="https://i.imgur.com/qngJv3q.png" width="300">
