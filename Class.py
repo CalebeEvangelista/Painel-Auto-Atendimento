@@ -6,9 +6,6 @@ def limparArquivo():
         arq.writelines('')
 
 def imprimir_pedido():
-    from os import system
-    import time
-
     system('cls')
     print("Pedido feito com sucesso")
     time.sleep(1)
@@ -49,7 +46,7 @@ def imprimir_pedido():
                 if itens2[i][h] and itens2[i][j] == '0':
                     del(itens2[i])
                     i -= 1
-                else:
+                elif itens2[i][h] and itens2[i][j] != '0':
                     valor = float(itens2[i][h])
                     quantidade = float(itens2[i][j])
                     soma = valor * quantidade
