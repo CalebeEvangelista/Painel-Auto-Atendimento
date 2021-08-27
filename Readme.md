@@ -22,4 +22,4 @@ O código foi feito 100% em live na [Twitch](https://www.twitch.tv/calebeevangel
 [Twitch](https://www.twitch.tv/calebeevangelista)
 [Youtube](https://www.youtube.com/channel/UCkXx8-TUjR_OUIzcOqdVDuw)
 
-<img align="center" src="https://i.imgur.com/qngJv3q.png" alt="200" width="">
+<img align="center" src="https://i.imgur.com/qngJv3q.png" width="300">
